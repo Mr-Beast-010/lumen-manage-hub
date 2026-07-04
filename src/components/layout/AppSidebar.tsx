@@ -46,7 +46,7 @@ export function AppSidebar() {
   const isActive = (url: string) => (url === "/" ? pathname === "/" : pathname.startsWith(url));
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border backdrop-blur-xl">
       <SidebarHeader className="border-b border-sidebar-border py-4">
         <div className={cn("flex items-center gap-2 px-2", collapsed && "justify-center px-0")}>
           <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-elegant">

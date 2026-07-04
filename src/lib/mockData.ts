@@ -117,4 +117,34 @@ export const analytics = {
     { name: "D", value: 6 },
     { name: "F", value: 3 },
   ],
+  feeCollection: [
+    { month: "Jan", collected: 128, pending: 22 },
+    { month: "Feb", collected: 142, pending: 18 },
+    { month: "Mar", collected: 156, pending: 24 },
+    { month: "Apr", collected: 168, pending: 20 },
+    { month: "May", collected: 174, pending: 16 },
+    { month: "Jun", collected: 182, pending: 14 },
+    { month: "Jul", collected: 195, pending: 12 },
+  ],
 };
+
+export const activities = [
+  { id: "a1", type: "enrollment", title: "New enrollment", desc: "Aria Chen joined Grade 10-B", time: "2m ago" },
+  { id: "a2", type: "payment", title: "Fee payment received", desc: "Invoice #2094 · $1,200", time: "24m ago" },
+  { id: "a3", type: "grade", title: "Grades published", desc: "Physics Q2 · 8-A", time: "1h ago" },
+  { id: "a4", type: "attendance", title: "Attendance marked", desc: "Ms. Rossi · Grade 9-C", time: "3h ago" },
+  { id: "a5", type: "report", title: "Report generated", desc: "Q2 analytics ready to review", time: "5h ago" },
+];
+
+export const events = [
+  { id: "e1", title: "Parent-Teacher Conference", date: "Jul 08", time: "10:00 AM", tag: "Meeting" },
+  { id: "e2", title: "Science Fair", date: "Jul 12", time: "9:00 AM", tag: "Event" },
+  { id: "e3", title: "Mid-term Examinations", date: "Jul 18", time: "All day", tag: "Exam" },
+  { id: "e4", title: "Sports Day", date: "Jul 22", time: "2:00 PM", tag: "Event" },
+];
+
+export const announcements = [
+  { id: "n1", title: "Summer schedule update", body: "New class timings effective from July 10. Check the calendar.", time: "Today" },
+  { id: "n2", title: "Library renovation", body: "The central library will be closed Jul 14-16 for upgrades.", time: "Yesterday" },
+  { id: "n3", title: "Staff training", body: "Mandatory pedagogy workshop for all teachers on Friday.", time: "2d ago" },
+];
