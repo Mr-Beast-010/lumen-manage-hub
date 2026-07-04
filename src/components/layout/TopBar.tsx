@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/hooks/useTheme";
 import { useNavigate } from "react-router-dom";
+import { Breadcrumbs } from "./Breadcrumbs";
 
 export function TopBar() {
   const { theme, toggle } = useTheme();
@@ -22,8 +23,10 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-border bg-background/70 px-4 backdrop-blur-xl">
       <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
+      <Breadcrumbs />
 
-      <div className="relative hidden max-w-md flex-1 md:block">
+
+      <div className="relative ml-auto hidden max-w-md flex-1 md:block md:max-w-xs lg:max-w-md">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search students, classes, invoices..."
