@@ -111,25 +111,25 @@
     --glass: 232 35% 10% / 0.6;
     --glass-border: 265 60% 60% / 0.18;
 
-    --gradient-primary: linear-gradient(135deg, hsl(265 95% 68%), hsl(290 100% 72%));
-    --gradient-accent: linear-gradient(135deg, hsl(190 100% 60%), hsl(265 95% 68%));
-    --gradient-hero: radial-gradient(ellipse 80% 60% at 20% 0%, hsl(265 95% 68% / 0.28), transparent 60%),
-                     radial-gradient(ellipse 60% 50% at 90% 100%, hsl(190 100% 60% / 0.22), transparent 60%),
-                     radial-gradient(ellipse 50% 40% at 60% 40%, hsl(290 100% 72% / 0.18), transparent 60%);
+    --gradient-primary: linear-gradient(135deg, hsl(224 95% 62%), hsl(265 90% 68%));
+    --gradient-accent: linear-gradient(135deg, hsl(200 95% 60%), hsl(265 90% 68%));
+    --gradient-hero: radial-gradient(ellipse 80% 60% at 15% 0%, hsl(224 95% 62% / 0.32), transparent 60%),
+                     radial-gradient(ellipse 60% 50% at 90% 100%, hsl(265 90% 68% / 0.28), transparent 60%),
+                     radial-gradient(ellipse 50% 40% at 60% 40%, hsl(200 95% 60% / 0.14), transparent 60%);
     --gradient-surface: linear-gradient(180deg, hsl(232 35% 10% / 0.7), hsl(232 40% 6% / 0.4));
 
-    --shadow-elegant: 0 20px 60px -20px hsl(265 95% 40% / 0.55);
-    --shadow-glow: 0 0 80px hsl(290 100% 55% / 0.35);
+    --shadow-elegant: 0 20px 60px -20px hsl(224 95% 50% / 0.55);
+    --shadow-glow: 0 0 80px hsl(265 90% 60% / 0.4);
     --shadow-card: 0 8px 32px -12px hsl(232 60% 2% / 0.7);
 
-    --sidebar-background: 232 40% 6%;
-    --sidebar-foreground: 220 15% 75%;
-    --sidebar-primary: 265 95% 68%;
-    --sidebar-primary-foreground: 232 40% 5%;
-    --sidebar-accent: 232 30% 12%;
+    --sidebar-background: 232 45% 5% / 0.6;
+    --sidebar-foreground: 220 15% 78%;
+    --sidebar-primary: 224 95% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 232 30% 14%;
     --sidebar-accent-foreground: 220 20% 96%;
     --sidebar-border: 232 25% 14%;
-    --sidebar-ring: 265 95% 68%;
+    --sidebar-ring: 224 95% 62%;
   }
 }
 
