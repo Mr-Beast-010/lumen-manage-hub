@@ -80,17 +80,17 @@
     --popover: 232 40% 7%;
     --popover-foreground: 220 20% 96%;
 
-    --primary: 265 95% 68%;
-    --primary-foreground: 232 40% 5%;
-    --primary-glow: 290 100% 72%;
+    --primary: 224 95% 62%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 265 90% 68%;
 
     --secondary: 232 30% 12%;
     --secondary-foreground: 220 20% 96%;
 
     --muted: 232 25% 14%;
-    --muted-foreground: 220 15% 65%;
+    --muted-foreground: 220 15% 68%;
 
-    --accent: 190 100% 60%;
+    --accent: 265 90% 68%;
     --accent-foreground: 232 40% 5%;
 
     --success: 152 80% 50%;
