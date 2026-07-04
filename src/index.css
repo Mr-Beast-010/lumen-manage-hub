@@ -17,9 +17,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 224 40% 10%;
 
-    --primary: 258 90% 66%;
+    --primary: 224 90% 58%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 95% 72%;
+    --primary-glow: 265 85% 65%;
 
     --secondary: 220 20% 94%;
     --secondary-foreground: 224 40% 12%;
@@ -50,10 +50,10 @@
     --glass: 0 0% 100% / 0.6;
     --glass-border: 220 20% 88% / 0.6;
 
-    --gradient-primary: linear-gradient(135deg, hsl(258 90% 66%), hsl(280 95% 72%));
-    --gradient-accent: linear-gradient(135deg, hsl(190 95% 55%), hsl(258 90% 66%));
-    --gradient-hero: radial-gradient(ellipse at top, hsl(258 90% 66% / 0.35), transparent 60%),
-                     radial-gradient(ellipse at bottom right, hsl(190 95% 55% / 0.25), transparent 60%);
+    --gradient-primary: linear-gradient(135deg, hsl(224 90% 58%), hsl(265 85% 65%));
+    --gradient-accent: linear-gradient(135deg, hsl(200 90% 55%), hsl(265 85% 65%));
+    --gradient-hero: radial-gradient(ellipse at top, hsl(224 90% 58% / 0.25), transparent 60%),
+                     radial-gradient(ellipse at bottom right, hsl(265 85% 65% / 0.2), transparent 60%);
     --gradient-surface: linear-gradient(180deg, hsl(0 0% 100% / 0.6), hsl(220 30% 98% / 0.3));
 
     --shadow-elegant: 0 10px 40px -12px hsl(258 90% 66% / 0.35);
