@@ -30,7 +30,7 @@ const mainItems = [
   { title: "Students", url: "/students", icon: Users },
   { title: "Teachers", url: "/teachers", icon: GraduationCap },
   { title: "Attendance", url: "/attendance", icon: CalendarCheck },
-  { title: "Grades", url: "/grades", icon: ClipboardList },
+  { title: "Exams", url: "/exams", icon: ClipboardList },
   { title: "Fees", url: "/fees", icon: Wallet },
   { title: "Reports", url: "/reports", icon: BarChart3 },
 ];

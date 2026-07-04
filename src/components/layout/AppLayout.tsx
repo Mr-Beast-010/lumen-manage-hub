@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { TopBar } from "./TopBar";
+import { OfflineState } from "@/components/shared/OfflineState";
 
 export default function AppLayout() {
   return (
@@ -12,6 +13,7 @@ export default function AppLayout() {
         <AppSidebar />
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <TopBar />
+          <OfflineState />
           <main className="flex-1 p-4 md:p-6 lg:p-8">
             <Outlet />
           </main>

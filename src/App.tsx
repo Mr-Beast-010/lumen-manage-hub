@@ -9,6 +9,7 @@ import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import Attendance from "./pages/Attendance";
 import Grades from "./pages/Grades";
+import Exams from "./pages/Exams";
 import Fees from "./pages/Fees";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/grades" element={<Grades />} />
+            <Route path="/exams" element={<Exams />} />
             <Route path="/fees" element={<Fees />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
