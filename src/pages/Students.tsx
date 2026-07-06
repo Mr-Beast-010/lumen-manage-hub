@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LayoutDashboard, List, Plus } from "lucide-react";
@@ -11,6 +12,7 @@ import { studentRecords, type StudentRecord } from "@/features/students/data";
 import { toast } from "sonner";
 
 export default function Students() {
+  const navigate = useNavigate();
   const [rows, setRows] = useState<StudentRecord[]>(studentRecords);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("dashboard");
@@ -20,7 +22,7 @@ export default function Students() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleAdd = () => toast.info("Add Student form ships in the next sprint");
+  const handleAdd = () => navigate("/students/new");
 
   const handleDelete = (ids: string[]) => {
     setRows((prev) => prev.filter((r) => !ids.includes(r.id)));
