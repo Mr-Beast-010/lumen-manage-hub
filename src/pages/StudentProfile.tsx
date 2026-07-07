@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer,
-  Tooltip, XAxis, YAxis, Legend,
+  Tooltip, XAxis, YAxis,
 } from "recharts";
 import {
   ArrowLeft, Pencil, IdCard, Download, ArrowUp, Archive,
