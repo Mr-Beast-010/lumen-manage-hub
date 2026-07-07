@@ -29,7 +29,7 @@ export default function Students() {
     toast.success(`${ids.length} student${ids.length > 1 ? "s" : ""} removed`);
   };
 
-  const handleView = (r: StudentRecord) => toast.info(`Viewing profile of ${r.name}`);
+  const handleView = (r: StudentRecord) => navigate(`/students/${r.id}`);
 
   return (
     <div className="space-y-6">
