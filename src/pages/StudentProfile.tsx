@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { PageHeader } from "@/components/shared/PageHeader";
+
 import { OverviewMetric } from "@/features/students/profile/OverviewMetric";
 import { ActivityTimeline } from "@/features/students/profile/ActivityTimeline";
 import { AttendanceCalendar } from "@/features/students/profile/AttendanceCalendar";
