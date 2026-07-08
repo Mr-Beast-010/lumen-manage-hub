@@ -2,13 +2,14 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   month: string; // e.g. "2026-07"
-  data: { date: string; status: "present" | "absent" | "late" }[];
+  data: { date: string; status: "present" | "absent" | "late" | "leave" }[];
 }
 
 const toneMap = {
   present: "bg-success/70 text-success-foreground",
   absent: "bg-destructive/70 text-destructive-foreground",
   late: "bg-warning/70 text-warning-foreground",
+  leave: "bg-accent/70 text-accent-foreground",
 } as const;
 
 export function AttendanceCalendar({ month, data }: Props) {
