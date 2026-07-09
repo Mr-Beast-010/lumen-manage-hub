@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import { Bell, Search, Moon, Sun, Command } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -15,10 +15,23 @@ import {
 import { useTheme } from "@/hooks/useTheme";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { GlobalStudentSearch } from "@/features/students/dialogs/GlobalStudentSearch";
 
 export function TopBar() {
   const { theme, toggle } = useTheme();
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-border bg-background/70 px-4 backdrop-blur-xl">
@@ -26,17 +39,19 @@ export function TopBar() {
       <Breadcrumbs />
 
 
-      <div className="relative ml-auto hidden max-w-md flex-1 md:block md:max-w-xs lg:max-w-md">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Search students, classes, invoices..."
-          className="h-10 border-border/60 bg-secondary/40 pl-9 pr-16"
-          aria-label="Global search"
-        />
+      <button
+        type="button"
+        onClick={() => setSearchOpen(true)}
+        className="relative ml-auto hidden h-10 max-w-md flex-1 items-center gap-2 rounded-md border border-border/60 bg-secondary/40 px-3 pr-16 text-left text-sm text-muted-foreground transition-smooth hover:border-primary/40 md:flex md:max-w-xs lg:max-w-md"
+        aria-label="Open global search"
+      >
+        <Search className="h-4 w-4" />
+        <span className="flex-1 truncate">Search students, classes, invoices…</span>
         <kbd className="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 items-center gap-1 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground sm:inline-flex">
           <Command className="h-3 w-3" />K
         </kbd>
-      </div>
+      </button>
+
 
       <div className="ml-auto flex items-center gap-2">
         <Button
