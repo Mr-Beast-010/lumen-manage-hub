@@ -15,6 +15,8 @@ import Exams from "./pages/Exams";
 import Fees from "./pages/Fees";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
+import Alumni from "./pages/Alumni";
+
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +35,8 @@ const App = () => (
             <Route path="/students" element={<Students />} />
             <Route path="/students/new" element={<StudentAdmission />} />
             <Route path="/students/:id" element={<StudentProfile />} />
+            <Route path="/alumni" element={<Alumni />} />
+
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/grades" element={<Grades />} />

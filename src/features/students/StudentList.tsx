@@ -15,7 +15,7 @@ import {
 import {
   ChevronLeft, ChevronRight, Search, ArrowUpDown, MoreHorizontal,
   Eye, Pencil, Trash2, Ban, ArrowUp, IdCard, Download, FileText,
-  Columns3, Filter, Plus, X, UserPlus, Users,
+  Columns3, Plus, X, UserPlus, Users, Upload, FileSpreadsheet, Archive, Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,7 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import type { StudentRecord } from "./data";
+import { exportStudentsCSV, exportStudentsPDF, exportStudentsXLSX } from "./utils/exporters";
 
 interface Props {
   rows: StudentRecord[];
@@ -42,7 +43,14 @@ interface Props {
   onAdd: () => void;
   onDelete: (ids: string[]) => void;
   onView?: (r: StudentRecord) => void;
+  onImport?: () => void;
+  onIdCard?: (r: StudentRecord) => void;
+  onTransfer?: (r: StudentRecord) => void;
+  onPromote?: (ids: string[]) => void;
+  onSuspend?: (ids: string[]) => void;
+  onArchive?: (ids: string[]) => void;
 }
+
 
 const feeStyles: Record<string, string> = {
   paid: "bg-success/10 text-success border-success/20",
@@ -63,48 +71,9 @@ function AttendanceBar({ value }: { value: number }) {
   );
 }
 
-function exportCSV(rows: StudentRecord[]) {
-  const cols: (keyof StudentRecord)[] = ["admissionNo", "rollNo", "name", "className", "section", "email", "phone", "attendance", "feeStatus", "status"];
-  const header = cols.join(",");
-  const body = rows
-    .map((r) => cols.map((c) => `"${String(r[c]).replace(/"/g, '""')}"`).join(","))
-    .join("\n");
-  const blob = new Blob([header + "\n" + body], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `students-${Date.now()}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
-function exportPDF(rows: StudentRecord[]) {
-  const w = window.open("", "_blank", "width=900,height=700");
-  if (!w) return;
-  const style = `
-    body { font-family: system-ui, sans-serif; padding: 24px; color: #0f172a; }
-    h1 { font-size: 20px; margin: 0 0 4px; }
-    p { color: #64748b; margin: 0 0 16px; font-size: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; }
-    th { background: #f1f5f9; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; }
-  `;
-  const rowsHtml = rows.map((r) => `
-    <tr>
-      <td>${r.admissionNo}</td><td>${r.rollNo}</td><td>${r.name}</td>
-      <td>${r.className}-${r.section}</td><td>${r.attendance}%</td>
-      <td>${r.feeStatus}</td><td>${r.status}</td>
-    </tr>`).join("");
-  w.document.write(`<html><head><title>Students</title><style>${style}</style></head>
-    <body><h1>Students report</h1><p>${rows.length} records · ${new Date().toLocaleString()}</p>
-    <table><thead><tr>
-    <th>Admission No</th><th>Roll</th><th>Name</th><th>Class</th><th>Attendance</th><th>Fee</th><th>Status</th>
-    </tr></thead><tbody>${rowsHtml}</tbody></table></body></html>`);
-  w.document.close();
-  setTimeout(() => w.print(), 300);
-}
 
-export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
+export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard, onTransfer, onPromote, onSuspend, onArchive }: Props) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -112,6 +81,7 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
   const [classFilter, setClassFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [feeFilter, setFeeFilter] = useState<string>("all");
+
 
   const filtered = useMemo(() => rows.filter((r) => {
     if (classFilter !== "all" && r.className !== classFilter) return false;
@@ -203,10 +173,11 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => onView?.(row.original)}><Eye className="mr-2 h-4 w-4" />View profile</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.info("Edit form coming next sprint")}><Pencil className="mr-2 h-4 w-4" />Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.success(`${row.original.name} promoted`)}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.success(`${row.original.name} suspended`)}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.info("ID card sent to printer")}><IdCard className="mr-2 h-4 w-4" />Print ID card</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onIdCard?.(row.original)}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onPromote?.([row.original.id])}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onSuspend?.([row.original.id])}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onTransfer?.(row.original)}><Send className="mr-2 h-4 w-4" />Transfer certificate</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onArchive?.([row.original.id])}><Archive className="mr-2 h-4 w-4" />Archive as alumni</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => onDelete([row.original.id])}>
                 <Trash2 className="mr-2 h-4 w-4" />Delete
@@ -216,7 +187,8 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
         </div>
       ),
     },
-  ], [onDelete, onView]);
+  ], [onDelete, onView, onIdCard, onTransfer, onPromote, onSuspend, onArchive]);
+
 
   const table = useReactTable({
     data: filtered,
@@ -329,17 +301,22 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
               <Button variant="outline" size="sm"><Download className="mr-1 h-4 w-4" /> Export</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => exportCSV(filtered)}>
-                <FileText className="mr-2 h-4 w-4" /> Export CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => exportPDF(filtered)}>
-                <FileText className="mr-2 h-4 w-4" /> Export PDF
-              </DropdownMenuItem>
+              <DropdownMenuLabel className="text-xs">Export {filtered.length} filtered</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => exportStudentsCSV(filtered)}><FileText className="mr-2 h-4 w-4" /> CSV</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => exportStudentsXLSX(filtered)}><FileSpreadsheet className="mr-2 h-4 w-4" /> Excel (.xlsx)</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => exportStudentsPDF(filtered)}><FileText className="mr-2 h-4 w-4" /> PDF</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs">Entire database</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => exportStudentsXLSX(rows, "students-all")}><FileSpreadsheet className="mr-2 h-4 w-4" /> All students (.xlsx)</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          {onImport && (
+            <Button variant="outline" size="sm" onClick={onImport}><Upload className="mr-1 h-4 w-4" /> Import</Button>
+          )}
           <Button variant="hero" size="sm" onClick={onAdd}><Plus className="mr-1 h-4 w-4" /> Add Student</Button>
         </div>
       </div>
+
 
       {/* Bulk action bar */}
       <AnimatePresence>
@@ -353,12 +330,17 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
             <p className="text-sm">
               <span className="font-medium text-primary">{selectedCount}</span> selected
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button variant="ghost" size="sm" onClick={() => setRowSelection({})}>Deselect</Button>
+              <Button variant="outline" size="sm" onClick={() => { onPromote?.(selectedIds); setRowSelection({}); }}><ArrowUp className="mr-1 h-4 w-4" />Promote</Button>
+              <Button variant="outline" size="sm" onClick={() => { onSuspend?.(selectedIds); setRowSelection({}); }}><Ban className="mr-1 h-4 w-4" />Suspend</Button>
+              <Button variant="outline" size="sm" onClick={() => { onArchive?.(selectedIds); setRowSelection({}); }}><Archive className="mr-1 h-4 w-4" />Archive</Button>
+              <Button variant="outline" size="sm" onClick={() => exportStudentsXLSX(filtered.filter((r) => selectedIds.includes(r.id)), "selection")}><Download className="mr-1 h-4 w-4" />Export</Button>
               <Button variant="destructive" size="sm" onClick={() => { onDelete(selectedIds); setRowSelection({}); }}>
                 <Trash2 className="mr-1 h-4 w-4" /> Delete
               </Button>
             </div>
+
           </motion.div>
         )}
       </AnimatePresence>
@@ -452,14 +434,16 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => onView?.(r)}><Eye className="mr-2 h-4 w-4" />View</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.info("Edit coming soon")}><Pencil className="mr-2 h-4 w-4" />Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.success(`${r.name} promoted`)}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.success(`${r.name} suspended`)}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.info("Printing ID card")}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onIdCard?.(r)}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onPromote?.([r.id])}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onSuspend?.([r.id])}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onTransfer?.(r)}><Send className="mr-2 h-4 w-4" />Transfer certificate</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onArchive?.([r.id])}><Archive className="mr-2 h-4 w-4" />Archive</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => onDelete([r.id])}>
                           <Trash2 className="mr-2 h-4 w-4" />Delete
                         </DropdownMenuItem>
+
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
