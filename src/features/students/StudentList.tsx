@@ -330,12 +330,17 @@ export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard,
             <p className="text-sm">
               <span className="font-medium text-primary">{selectedCount}</span> selected
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button variant="ghost" size="sm" onClick={() => setRowSelection({})}>Deselect</Button>
+              <Button variant="outline" size="sm" onClick={() => { onPromote?.(selectedIds); setRowSelection({}); }}><ArrowUp className="mr-1 h-4 w-4" />Promote</Button>
+              <Button variant="outline" size="sm" onClick={() => { onSuspend?.(selectedIds); setRowSelection({}); }}><Ban className="mr-1 h-4 w-4" />Suspend</Button>
+              <Button variant="outline" size="sm" onClick={() => { onArchive?.(selectedIds); setRowSelection({}); }}><Archive className="mr-1 h-4 w-4" />Archive</Button>
+              <Button variant="outline" size="sm" onClick={() => exportStudentsXLSX(filtered.filter((r) => selectedIds.includes(r.id)), "selection")}><Download className="mr-1 h-4 w-4" />Export</Button>
               <Button variant="destructive" size="sm" onClick={() => { onDelete(selectedIds); setRowSelection({}); }}>
                 <Trash2 className="mr-1 h-4 w-4" /> Delete
               </Button>
             </div>
+
           </motion.div>
         )}
       </AnimatePresence>
