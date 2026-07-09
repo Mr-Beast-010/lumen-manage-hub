@@ -86,33 +86,7 @@ function exportCSV(rows: StudentRecord[]) {
   URL.revokeObjectURL(url);
 }
 
-function exportPDF(rows: StudentRecord[]) {
-  const w = window.open("", "_blank", "width=900,height=700");
-  if (!w) return;
-  const style = `
-    body { font-family: system-ui, sans-serif; padding: 24px; color: #0f172a; }
-    h1 { font-size: 20px; margin: 0 0 4px; }
-    p { color: #64748b; margin: 0 0 16px; font-size: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; }
-    th { background: #f1f5f9; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; }
-  `;
-  const rowsHtml = rows.map((r) => `
-    <tr>
-      <td>${r.admissionNo}</td><td>${r.rollNo}</td><td>${r.name}</td>
-      <td>${r.className}-${r.section}</td><td>${r.attendance}%</td>
-      <td>${r.feeStatus}</td><td>${r.status}</td>
-    </tr>`).join("");
-  w.document.write(`<html><head><title>Students</title><style>${style}</style></head>
-    <body><h1>Students report</h1><p>${rows.length} records · ${new Date().toLocaleString()}</p>
-    <table><thead><tr>
-    <th>Admission No</th><th>Roll</th><th>Name</th><th>Class</th><th>Attendance</th><th>Fee</th><th>Status</th>
-    </tr></thead><tbody>${rowsHtml}</tbody></table></body></html>`);
-  w.document.close();
-  setTimeout(() => w.print(), 300);
-}
-
-export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
+export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard, onTransfer, onPromote, onSuspend, onArchive }: Props) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -120,6 +94,7 @@ export function StudentList({ rows, onAdd, onDelete, onView }: Props) {
   const [classFilter, setClassFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [feeFilter, setFeeFilter] = useState<string>("all");
+
 
   const filtered = useMemo(() => rows.filter((r) => {
     if (classFilter !== "all" && r.className !== classFilter) return false;
