@@ -71,20 +71,7 @@ function AttendanceBar({ value }: { value: number }) {
   );
 }
 
-function exportCSV(rows: StudentRecord[]) {
-  const cols: (keyof StudentRecord)[] = ["admissionNo", "rollNo", "name", "className", "section", "email", "phone", "attendance", "feeStatus", "status"];
-  const header = cols.join(",");
-  const body = rows
-    .map((r) => cols.map((c) => `"${String(r[c]).replace(/"/g, '""')}"`).join(","))
-    .join("\n");
-  const blob = new Blob([header + "\n" + body], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `students-${Date.now()}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+
 
 export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard, onTransfer, onPromote, onSuspend, onArchive }: Props) {
   const [sorting, setSorting] = useState<SortingState>([]);
