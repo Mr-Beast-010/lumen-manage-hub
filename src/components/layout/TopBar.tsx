@@ -115,6 +115,8 @@ export function TopBar() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <GlobalStudentSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }
+
