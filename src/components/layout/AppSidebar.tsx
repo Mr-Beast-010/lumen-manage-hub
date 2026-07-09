@@ -9,6 +9,7 @@ import {
   BarChart3,
   Settings,
   Sparkles,
+  Archive,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,12 +29,14 @@ import { cn } from "@/lib/utils";
 const mainItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Students", url: "/students", icon: Users },
+  { title: "Alumni", url: "/alumni", icon: Archive },
   { title: "Teachers", url: "/teachers", icon: GraduationCap },
   { title: "Attendance", url: "/attendance", icon: CalendarCheck },
   { title: "Exams", url: "/exams", icon: ClipboardList },
   { title: "Fees", url: "/fees", icon: Wallet },
   { title: "Reports", url: "/reports", icon: BarChart3 },
 ];
+
 
 const secondaryItems = [
   { title: "Settings", url: "/settings", icon: Settings },
