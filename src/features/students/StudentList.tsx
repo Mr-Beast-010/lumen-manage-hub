@@ -434,14 +434,16 @@ export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard,
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => onView?.(r)}><Eye className="mr-2 h-4 w-4" />View</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.info("Edit coming soon")}><Pencil className="mr-2 h-4 w-4" />Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.success(`${r.name} promoted`)}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.success(`${r.name} suspended`)}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toast.info("Printing ID card")}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onIdCard?.(r)}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onPromote?.([r.id])}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onSuspend?.([r.id])}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onTransfer?.(r)}><Send className="mr-2 h-4 w-4" />Transfer certificate</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onArchive?.([r.id])}><Archive className="mr-2 h-4 w-4" />Archive</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => onDelete([r.id])}>
                           <Trash2 className="mr-2 h-4 w-4" />Delete
                         </DropdownMenuItem>
+
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
