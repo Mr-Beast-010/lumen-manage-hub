@@ -173,10 +173,11 @@ export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard,
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => onView?.(row.original)}><Eye className="mr-2 h-4 w-4" />View profile</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.info("Edit form coming next sprint")}><Pencil className="mr-2 h-4 w-4" />Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.success(`${row.original.name} promoted`)}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.success(`${row.original.name} suspended`)}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => toast.info("ID card sent to printer")}><IdCard className="mr-2 h-4 w-4" />Print ID card</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onIdCard?.(row.original)}><IdCard className="mr-2 h-4 w-4" />ID card</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onPromote?.([row.original.id])}><ArrowUp className="mr-2 h-4 w-4" />Promote</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onSuspend?.([row.original.id])}><Ban className="mr-2 h-4 w-4" />Suspend</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onTransfer?.(row.original)}><Send className="mr-2 h-4 w-4" />Transfer certificate</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onArchive?.([row.original.id])}><Archive className="mr-2 h-4 w-4" />Archive as alumni</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={() => onDelete([row.original.id])}>
                 <Trash2 className="mr-2 h-4 w-4" />Delete
@@ -186,7 +187,8 @@ export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard,
         </div>
       ),
     },
-  ], [onDelete, onView]);
+  ], [onDelete, onView, onIdCard, onTransfer, onPromote, onSuspend, onArchive]);
+
 
   const table = useReactTable({
     data: filtered,
