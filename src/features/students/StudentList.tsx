@@ -15,7 +15,7 @@ import {
 import {
   ChevronLeft, ChevronRight, Search, ArrowUpDown, MoreHorizontal,
   Eye, Pencil, Trash2, Ban, ArrowUp, IdCard, Download, FileText,
-  Columns3, Filter, Plus, X, UserPlus, Users,
+  Columns3, Plus, X, UserPlus, Users, Upload, FileSpreadsheet, Archive, Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,7 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import type { StudentRecord } from "./data";
+import { exportStudentsCSV, exportStudentsPDF, exportStudentsXLSX } from "./utils/exporters";
 
 interface Props {
   rows: StudentRecord[];
@@ -42,7 +43,14 @@ interface Props {
   onAdd: () => void;
   onDelete: (ids: string[]) => void;
   onView?: (r: StudentRecord) => void;
+  onImport?: () => void;
+  onIdCard?: (r: StudentRecord) => void;
+  onTransfer?: (r: StudentRecord) => void;
+  onPromote?: (ids: string[]) => void;
+  onSuspend?: (ids: string[]) => void;
+  onArchive?: (ids: string[]) => void;
 }
+
 
 const feeStyles: Record<string, string> = {
   paid: "bg-success/10 text-success border-success/20",
