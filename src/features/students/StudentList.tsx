@@ -301,17 +301,22 @@ export function StudentList({ rows, onAdd, onDelete, onView, onImport, onIdCard,
               <Button variant="outline" size="sm"><Download className="mr-1 h-4 w-4" /> Export</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => exportCSV(filtered)}>
-                <FileText className="mr-2 h-4 w-4" /> Export CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => exportPDF(filtered)}>
-                <FileText className="mr-2 h-4 w-4" /> Export PDF
-              </DropdownMenuItem>
+              <DropdownMenuLabel className="text-xs">Export {filtered.length} filtered</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => exportStudentsCSV(filtered)}><FileText className="mr-2 h-4 w-4" /> CSV</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => exportStudentsXLSX(filtered)}><FileSpreadsheet className="mr-2 h-4 w-4" /> Excel (.xlsx)</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => exportStudentsPDF(filtered)}><FileText className="mr-2 h-4 w-4" /> PDF</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs">Entire database</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => exportStudentsXLSX(rows, "students-all")}><FileSpreadsheet className="mr-2 h-4 w-4" /> All students (.xlsx)</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          {onImport && (
+            <Button variant="outline" size="sm" onClick={onImport}><Upload className="mr-1 h-4 w-4" /> Import</Button>
+          )}
           <Button variant="hero" size="sm" onClick={onAdd}><Plus className="mr-1 h-4 w-4" /> Add Student</Button>
         </div>
       </div>
+
 
       {/* Bulk action bar */}
       <AnimatePresence>
