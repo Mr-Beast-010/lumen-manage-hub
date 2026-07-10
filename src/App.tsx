@@ -17,6 +17,7 @@ import Fees from "./pages/Fees";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Alumni from "./pages/Alumni";
+import Timetable from "./pages/Timetable";
 
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -40,6 +41,7 @@ const App = () => (
 
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/teachers/:id" element={<TeacherProfile />} />
+            <Route path="/timetable" element={<Timetable />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/grades" element={<Grades />} />
             <Route path="/exams" element={<Exams />} />
