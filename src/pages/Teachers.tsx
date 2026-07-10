@@ -1,49 +1,86 @@
-import { useMemo } from "react";
-import { ColumnDef } from "@tanstack/react-table";
+import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { DataTable } from "@/components/shared/DataTable";
-import { StatusBadge } from "@/components/shared/StatusBadge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LayoutDashboard, List, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Plus, Star } from "lucide-react";
-import { teachers, type Teacher } from "@/lib/mockData";
+import { TeacherAnalytics } from "@/features/teachers/TeacherAnalytics";
+import { TeacherDirectory } from "@/features/teachers/TeacherDirectory";
+import { StudentListSkeleton } from "@/features/students/StudentListSkeleton";
+import { teacherRecords, type TeacherRecord } from "@/features/teachers/data";
+import { toast } from "sonner";
 
 export default function Teachers() {
-  const columns = useMemo<ColumnDef<Teacher>[]>(() => [
-    {
-      accessorKey: "name",
-      header: "Teacher",
-      cell: ({ row }) => (
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-accent text-xs font-semibold text-accent-foreground">
-            {row.original.name.split(" ").map((n) => n[0]).join("")}
-          </div>
-          <div>
-            <p className="font-medium">{row.original.name}</p>
-            <p className="text-xs text-muted-foreground">{row.original.email}</p>
-          </div>
-        </div>
-      ),
-    },
-    { accessorKey: "subject", header: "Subject" },
-    { accessorKey: "classes", header: "Classes" },
-    {
-      accessorKey: "rating",
-      header: "Rating",
-      cell: ({ getValue }) => (
-        <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5 fill-warning text-warning" />{getValue<number>()}</span>
-      ),
-    },
-    { accessorKey: "status", header: "Status", cell: ({ getValue }) => <StatusBadge status={getValue<string>()} /> },
-  ], []);
+  const [rows, setRows] = useState<TeacherRecord[]>(teacherRecords);
+  const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState("dashboard");
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 400);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleAdd = () => toast.info("Teacher onboarding wizard coming soon.");
+  const handleView = (r: TeacherRecord) => toast.info(`Opening ${r.name}'s profile…`);
+  const handleEdit = (r: TeacherRecord) => toast.info(`Editing ${r.name}`);
+  const handleDelete = (ids: string[]) => {
+    setRows((prev) => prev.filter((r) => !ids.includes(r.id)));
+    toast.success(`${ids.length} staff removed`);
+  };
+  const handleArchive = (ids: string[]) => {
+    setRows((prev) => prev.map((r) => ids.includes(r.id) ? { ...r, status: "archived" } : r));
+    toast.success(`${ids.length} staff archived`);
+  };
+  const handleIdCard = (r: TeacherRecord) => toast.info(`Generating ID card for ${r.name}`);
+  const handleAssignClasses = (r: TeacherRecord) => toast.info(`Assign classes to ${r.name}`);
+  const handleAssignSubjects = (r: TeacherRecord) => toast.info(`Assign subjects to ${r.name}`);
+
+  const activeRows = useMemo(() => rows.filter((r) => r.status !== "archived"), [rows]);
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Teachers"
-        description="Manage faculty profiles, assignments, and performance."
-        actions={<Button variant="hero"><Plus /> Invite teacher</Button>}
+        title="Teachers & Staff"
+        description="Faculty analytics, directory, assignments, and workflows."
+        actions={<Button variant="hero" onClick={handleAdd}><Plus /> Add Teacher</Button>}
       />
-      <DataTable columns={columns} data={teachers} searchKey="name" searchPlaceholder="Search teachers..." />
+
+      <Tabs value={tab} onValueChange={setTab} className="space-y-6">
+        <TabsList className="rounded-xl">
+          <TabsTrigger value="dashboard" className="gap-2">
+            <LayoutDashboard className="h-4 w-4" /> Dashboard
+          </TabsTrigger>
+          <TabsTrigger value="directory" className="gap-2">
+            <List className="h-4 w-4" /> Directory
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="dashboard" className="mt-0">
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+            <TeacherAnalytics rows={activeRows} onAdd={handleAdd} />
+          </motion.div>
+        </TabsContent>
+
+        <TabsContent value="directory" className="mt-0">
+          {loading ? (
+            <StudentListSkeleton />
+          ) : (
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+              <TeacherDirectory
+                rows={activeRows}
+                onAdd={handleAdd}
+                onView={handleView}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onArchive={handleArchive}
+                onIdCard={handleIdCard}
+                onAssignClasses={handleAssignClasses}
+                onAssignSubjects={handleAssignSubjects}
+              />
+            </motion.div>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
