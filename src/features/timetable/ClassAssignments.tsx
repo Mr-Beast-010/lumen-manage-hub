@@ -13,7 +13,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { Plus, Search, Trash2, Pencil, Star } from "lucide-react";
+import { Plus, Search, Trash2, Pencil, Star, Inbox } from "lucide-react";
 import { CLASSES, type ClassAssignment, getTeacher } from "./data";
 import { teacherRecords } from "@/features/teachers/data";
 import { toast } from "sonner";
@@ -93,7 +93,6 @@ export function ClassAssignments({ assignments, onChange }: Props) {
       next.push({
         id: `CA-${form.classId}-${form.teacherId}-${Date.now()}`,
         ...form,
-        classId: form.classId as ClassAssignment["classId"],
       });
       toast.success("Assignment added");
     }
@@ -196,7 +195,7 @@ export function ClassAssignments({ assignments, onChange }: Props) {
       </Card>
 
       {grouped.length === 0 ? (
-        <EmptyState title="No assignments" description="Try clearing filters or add a new assignment." />
+        <EmptyState icon={Inbox} title="No assignments" description="Try clearing filters or add a new assignment." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {grouped.map(([classId, list], idx) => {

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { Plus, Search, Trash2, Layers } from "lucide-react";
+import { Plus, Search, Trash2, Layers, Inbox } from "lucide-react";
 import {
   CLASSES, SUBJECTS, type SubjectAssignment, getTeacher, getSubject,
 } from "./data";
@@ -95,7 +95,7 @@ export function SubjectAssignments({ assignments, onChange }: Props) {
           id: `SA-${teacherId}-${sc}-${cid}-${Date.now()}-${added}`,
           teacherId,
           subjectCode: sc,
-          classId: cid as SubjectAssignment["classId"],
+          classId: cid,
         });
         added++;
       });
@@ -194,7 +194,7 @@ export function SubjectAssignments({ assignments, onChange }: Props) {
       </Card>
 
       {groupedByTeacher.length === 0 ? (
-        <EmptyState title="No subject assignments" description="Adjust filters or create a new bulk assignment." />
+        <EmptyState icon={Inbox} title="No subject assignments" description="Adjust filters or create a new bulk assignment." />
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {groupedByTeacher.map(([tid, list], idx) => {

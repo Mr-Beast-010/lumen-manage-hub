@@ -75,7 +75,7 @@ export type ClassId = (typeof CLASSES)[number]["id"];
 export interface ClassAssignment {
   id: string;
   teacherId: string;
-  classId: ClassId;
+  classId: string;
   academicYear: string;
   isClassTeacher: boolean;
 }
@@ -84,7 +84,7 @@ export interface SubjectAssignment {
   id: string;
   teacherId: string;
   subjectCode: string;
-  classId: ClassId;
+  classId: string;
 }
 
 export interface TimetableSlot {
