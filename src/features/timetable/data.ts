@@ -93,7 +93,7 @@ export interface TimetableSlot {
   periodId: PeriodId;
   teacherId: string;
   subjectCode: string;
-  classId: ClassId;
+  classId: string;
   roomId: string;
 }
 
