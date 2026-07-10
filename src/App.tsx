@@ -9,6 +9,7 @@ import Students from "./pages/Students";
 import StudentAdmission from "./pages/StudentAdmission";
 import StudentProfile from "./pages/StudentProfile";
 import Teachers from "./pages/Teachers";
+import TeacherProfile from "./pages/TeacherProfile";
 import Attendance from "./pages/Attendance";
 import Grades from "./pages/Grades";
 import Exams from "./pages/Exams";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/alumni" element={<Alumni />} />
 
             <Route path="/teachers" element={<Teachers />} />
+            <Route path="/teachers/:id" element={<TeacherProfile />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/grades" element={<Grades />} />
             <Route path="/exams" element={<Exams />} />
