@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,6 +15,7 @@ export default function Teachers() {
   const [rows, setRows] = useState<TeacherRecord[]>(teacherRecords);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("dashboard");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 400);
@@ -21,7 +23,7 @@ export default function Teachers() {
   }, []);
 
   const handleAdd = () => toast.info("Teacher onboarding wizard coming soon.");
-  const handleView = (r: TeacherRecord) => toast.info(`Opening ${r.name}'s profile…`);
+  const handleView = (r: TeacherRecord) => navigate(`/teachers/${r.id}`);
   const handleEdit = (r: TeacherRecord) => toast.info(`Editing ${r.name}`);
   const handleDelete = (ids: string[]) => {
     setRows((prev) => prev.filter((r) => !ids.includes(r.id)));
