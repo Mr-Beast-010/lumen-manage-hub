@@ -11,6 +11,7 @@ import {
   Sparkles,
   Archive,
   CalendarDays,
+  Briefcase,
 } from "lucide-react";
 import {
   Sidebar,
