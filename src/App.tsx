@@ -18,6 +18,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Alumni from "./pages/Alumni";
 import Timetable from "./pages/Timetable";
+import TeacherOperations from "./pages/TeacherOperations";
 
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
