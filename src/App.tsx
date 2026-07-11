@@ -18,6 +18,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Alumni from "./pages/Alumni";
 import Timetable from "./pages/Timetable";
+import TeacherOperations from "./pages/TeacherOperations";
 
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/alumni" element={<Alumni />} />
 
             <Route path="/teachers" element={<Teachers />} />
+            <Route path="/teachers/operations" element={<TeacherOperations />} />
             <Route path="/teachers/:id" element={<TeacherProfile />} />
             <Route path="/timetable" element={<Timetable />} />
             <Route path="/attendance" element={<Attendance />} />

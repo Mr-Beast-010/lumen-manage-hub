@@ -11,6 +11,7 @@ import {
   Sparkles,
   Archive,
   CalendarDays,
+  Briefcase,
 } from "lucide-react";
 import {
   Sidebar,
@@ -32,6 +33,7 @@ const mainItems = [
   { title: "Students", url: "/students", icon: Users },
   { title: "Alumni", url: "/alumni", icon: Archive },
   { title: "Teachers", url: "/teachers", icon: GraduationCap },
+  { title: "Operations", url: "/teachers/operations", icon: Briefcase },
   { title: "Timetable", url: "/timetable", icon: CalendarDays },
   { title: "Attendance", url: "/attendance", icon: CalendarCheck },
   { title: "Exams", url: "/exams", icon: ClipboardList },
