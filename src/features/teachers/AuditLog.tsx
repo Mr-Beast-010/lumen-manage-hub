@@ -22,7 +22,7 @@ export function AuditLog() {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string>("all");
 
-  useEffect(() => subscribeAudit(setEntries), []);
+  useEffect(() => { const u = subscribeAudit(setEntries); return () => { u; }; }, []);
 
   const filtered = useMemo(() => {
     return entries.filter((e) => {
