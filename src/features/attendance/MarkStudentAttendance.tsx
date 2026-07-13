@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Save, Send, Check, X, Clock, CalendarOff, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,8 +23,7 @@ export function MarkStudentAttendance() {
   const [marks, setMarks] = useState<Record<string, AttStatus>>({});
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  // reset marks when class changes
-  useMemo(() => {
+  useEffect(() => {
     const seed: Record<string, AttStatus> = {};
     roster.forEach((s) => (seed[s.id] = "present"));
     setMarks(seed);
